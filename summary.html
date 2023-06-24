@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Martyna Muszczek">
+<meta name="dcterms.date" content="2023-06-25">
+
+<title>Summary of immunopeptidomics experiment</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="summary_files/libs/clipboard/clipboard.min.js"></script>
+<script src="summary_files/libs/quarto-html/quarto.js"></script>
+<script src="summary_files/libs/quarto-html/popper.min.js"></script>
+<script src="summary_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="summary_files/libs/quarto-html/anchor.min.js"></script>
+<link href="summary_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="summary_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="summary_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="summary_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="summary_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<link href="summary_files/libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="summary_files/libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+</head>
+
+<body>
+
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-right">
+      <h1 class="title">Summary of immunopeptidomics experiment</h1>
+            <p class="subtitle lead">Lung and tumor samples in chunks vs.&nbsp;digested</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Martyna Muszczek </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 25, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="page-columns page-rows-contents page-layout-full toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#aim" id="toc-aim" class="nav-link active" data-scroll-target="#aim">Aim</a></li>
+  <li><a href="#experimental-design" id="toc-experimental-design" class="nav-link" data-scroll-target="#experimental-design">Experimental design</a></li>
+  <li><a href="#processing-steps" id="toc-processing-steps" class="nav-link" data-scroll-target="#processing-steps">Processing steps</a>
+  <ul>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link" data-scroll-target="#libraries">Libraries</a></li>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
+  </ul></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
+  <ul>
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics">Summary statistics</a></li>
+  <li><a href="#qualitative" id="toc-qualitative" class="nav-link" data-scroll-target="#qualitative">Qualitative</a>
+  <ul>
+  <li><a href="#peptide-length-distribution" id="toc-peptide-length-distribution" class="nav-link" data-scroll-target="#peptide-length-distribution">Peptide length distribution</a></li>
+  <li><a href="#peptide-ids-overlap" id="toc-peptide-ids-overlap" class="nav-link" data-scroll-target="#peptide-ids-overlap">Peptide IDs overlap</a></li>
+  <li><a href="#exploring-sections-of-overlap" id="toc-exploring-sections-of-overlap" class="nav-link" data-scroll-target="#exploring-sections-of-overlap">Exploring sections of overlap</a></li>
+  <li><a href="#binding-affinity-prediction" id="toc-binding-affinity-prediction" class="nav-link" data-scroll-target="#binding-affinity-prediction">Binding affinity prediction</a></li>
+  </ul></li>
+  <li><a href="#quantitative" id="toc-quantitative" class="nav-link" data-scroll-target="#quantitative">Quantitative</a>
+  <ul>
+  <li><a href="#quantile-normalization" id="toc-quantile-normalization" class="nav-link" data-scroll-target="#quantile-normalization">Quantile normalization</a></li>
+  <li><a href="#clustering" id="toc-clustering" class="nav-link" data-scroll-target="#clustering">Clustering</a></li>
+  <li><a href="#correlation-matrix" id="toc-correlation-matrix" class="nav-link" data-scroll-target="#correlation-matrix">Correlation matrix</a></li>
+  <li><a href="#linear-model-regression" id="toc-linear-model-regression" class="nav-link" data-scroll-target="#linear-model-regression">Linear model regression</a></li>
+  <li><a href="#pca" id="toc-pca" class="nav-link" data-scroll-target="#pca">PCA</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#session-info" id="toc-session-info" class="nav-link" data-scroll-target="#session-info">Session info</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content quarto-banner-title-block column-page-right" id="quarto-document-content">
+
+
+
+
+<section id="aim" class="level2">
+<h2 class="anchored" data-anchor-id="aim">Aim</h2>
+<p>Assessing whether the digestion of clinical samples with Real Research kit affects the surface proteins, and thus the immune peptidome presented on HLA-I molecules. In theory, single cell suspension should yield more representative and bigger repertoire.</p>
+</section>
+<section id="experimental-design" class="level2">
+<h2 class="anchored" data-anchor-id="experimental-design">Experimental design</h2>
+<p>Received samples of tumor and lung tissue from the same patient weighed accordingly 0,94 g and 1,21 g. They were cut into halves of the mass and subsequently one part underwent tissue digestion with Real Research kit (37C for 1h) while the second was cut into smaller chunks. Both parts were washed 7 times with ice-cold PBS and then incubated with the same amount of citric-phosphate buffer for 3 minutes. Supernatant was considered as HLA-I-eluted peptides, which was then purified and analyzed through LC-MS as we did before. Spectras were searched and library was created with FragPipe software, quantitation of peptide intensities was done with DIA-nn and maxLFQ algorithm.</p>
+</section>
+<section id="processing-steps" class="level2">
+<h2 class="anchored" data-anchor-id="processing-steps">Processing steps</h2>
+<section id="libraries" class="level3">
+<h3 class="anchored" data-anchor-id="libraries">Libraries</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "tidyverse"      "readxl"         "ggplot2"        "proBatch"      
+ [5] "diann"          "ggpubr"         "PCAtools"       "DEP"           
+ [9] "ComplexHeatmap" "eulerr"         "scrime"        </code></pre>
+</div>
+</div>
+</section>
+<section id="workflow" class="level3">
+<h3 class="anchored" data-anchor-id="workflow">Workflow</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/process_workflow.png" class="img-fluid figure-img" width="219"></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<section id="summary-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics">Summary statistics</h3>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["Sample"],"name":[1],"type":["chr"],"align":["left"]},{"label":["IDS"],"name":[2],"type":["int"],"align":["right"]},{"label":["Mean"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Median"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["SD"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Var"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Lung chunks","2":"4049","3":"19.74569","4":"19.54539","5":"2.320501","6":"5.384727"},{"1":"Lung digested","2":"2803","3":"19.44028","4":"19.21338","5":"2.484842","6":"6.174438"},{"1":"Tumor chunks","2":"5686","3":"19.11563","4":"19.12075","5":"2.319671","6":"5.380875"},{"1":"Tumor digested","2":"4088","3":"19.27171","4":"19.15095","5":"2.478307","6":"6.142003"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</section>
+<section id="qualitative" class="level3">
+<h3 class="anchored" data-anchor-id="qualitative">Qualitative</h3>
+<ul>
+<li>Digested samples have a seemingly lower number of identified peptides, indicating the procedure somehow alters the peptide presentation.</li>
+</ul>
+<section id="peptide-length-distribution" class="level4">
+<h4 class="anchored" data-anchor-id="peptide-length-distribution">Peptide length distribution</h4>
+<ul>
+<li>To elucidate the underlying reason behind worse peptide repertoire, it is worth looking into characteristics of eluted peptides, such as their amino-acid length distribution and its pattern in intersections between counterparting samples.</li>
+<li>All samples follow the same trend of peptide length distribution, with the most abundant 7 to 16-AA length:</li>
+</ul>
+<div class="cell" data-fig.asp="0.5">
+<div class="cell-output-display">
+<p><img src="summary_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="peptide-ids-overlap" class="level4">
+<h4 class="anchored" data-anchor-id="peptide-ids-overlap">Peptide IDs overlap</h4>
+<ul>
+<li>In both tumor and lung non-digested chunks yielded much more identified peptides than digested tissues.</li>
+</ul>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="exploring-sections-of-overlap" class="level4">
+<h4 class="anchored" data-anchor-id="exploring-sections-of-overlap">Exploring sections of overlap</h4>
+<ul>
+<li>The peptides that were not identified in digested samples follow the same trend of peptide length distribution:</li>
+</ul>
+<div class="cell quarto-layout-panel" data-fig.asp="0.5">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-11-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="binding-affinity-prediction" class="level4">
+<h4 class="anchored" data-anchor-id="binding-affinity-prediction">Binding affinity prediction</h4>
+<ul>
+<li>Identified peptides 8-14 AA long were used for NetMHCpan binding affinity prediction to HLA-I supertype representatives.</li>
+<li>Both methodologies yielded comparable share of peptides predicted to bind to HLA-I supertypes - with just a few %:</li>
+</ul>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-14-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<ul>
+<li>Peptide length distribution and binding affinity prediction lead us to believe that behind the underlying reason for lower number of peptide IDs there is no particular favor to peptides that are not presented. It is safe to assume that enzymes contained in used tissue digestion kit may influence membrane proteins, which was not previously reported.</li>
+</ul>
+</section>
+</section>
+<section id="quantitative" class="level3">
+<h3 class="anchored" data-anchor-id="quantitative">Quantitative</h3>
+<section id="quantile-normalization" class="level4">
+<h4 class="anchored" data-anchor-id="quantile-normalization">Quantile normalization</h4>
+<div class="cell quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="clustering" class="level4">
+<h4 class="anchored" data-anchor-id="clustering">Clustering</h4>
+<ul>
+<li>Tumor and lung chunks peptides are closely related, meaning their profiles are more similar than their counterparts after digestion., which seems pretty surprising.</li>
+<li>Due to similar chunks peptide profiles, it was suggested that it may be a reason of collagen peptides possibly present more abundantly in tissue after digestion with a.o. collagenases, but it turns out the answer is not straightforward.</li>
+</ul>
+<div class="cell quarto-layout-panel" data-fig.asp="1.2">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="correlation-matrix" class="level4">
+<h4 class="anchored" data-anchor-id="correlation-matrix">Correlation matrix</h4>
+<ul>
+<li>Again, lung and tumor chunks are more correlated together than to their digested counterparts.</li>
+</ul>
+<div class="cell" data-fig.asp="0.85">
+<div class="cell-output-display">
+<p><img src="summary_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="linear-model-regression" class="level4">
+<h4 class="anchored" data-anchor-id="linear-model-regression">Linear model regression</h4>
+<ul>
+<li>All conditions are poorly correlated.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="summary_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="pca" class="level4">
+<h4 class="anchored" data-anchor-id="pca">PCA</h4>
+<ul>
+<li>PCA plot suggests that there are factors distinguishing the methodologies - chunks on left side, digestion on right side. Fortunately, biological phenotypes are seemingly distanced from each other - tumor is located in upper half of the plot, lung in the bottom half. PC1 and PC2 account for 81,63% of variance between samples, and there is a couple of genes that drive the clustering.</li>
+</ul>
+<div class="cell quarto-layout-panel" data-fig.asp="0.95">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="summary_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</div>
+<ul>
+<li>Analysis of the genes will be continued.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="session-info" class="level2">
+<h2 class="anchored" data-anchor-id="session-info">Session info</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>R version 4.3.0 (2023-04-21 ucrt)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 19045)
+
+Matrix products: default
+
+
+locale:
+[1] LC_COLLATE=Polish_Poland.utf8  LC_CTYPE=Polish_Poland.utf8   
+[3] LC_MONETARY=Polish_Poland.utf8 LC_NUMERIC=C                  
+[5] LC_TIME=Polish_Poland.utf8    
+
+time zone: Europe/Warsaw
+tzcode source: internal
+
+attached base packages:
+[1] grid      stats     graphics  grDevices utils     datasets  methods  
+[8] base     
+
+other attached packages:
+ [1] scrime_1.3.5          eulerr_7.0.0          ComplexHeatmap_2.16.0
+ [4] DEP_1.22.0            PCAtools_2.12.0       ggrepel_0.9.3        
+ [7] ggpubr_0.6.0          diann_1.0.1           proBatch_1.3.0       
+[10] readxl_1.4.2          lubridate_1.9.2       forcats_1.0.0        
+[13] stringr_1.5.0         dplyr_1.1.2           purrr_1.0.1          
+[16] readr_2.1.4           tidyr_1.3.0           tibble_3.2.1         
+[19] ggplot2_3.4.2         tidyverse_2.0.0      
+
+loaded via a namespace (and not attached):
+  [1] ProtGenerics_1.32.0         matrixStats_1.0.0          
+  [3] bitops_1.0-7                httr_1.4.6                 
+  [5] RColorBrewer_1.1-3          doParallel_1.0.17          
+  [7] dynamicTreeCut_1.63-1       tools_4.3.0                
+  [9] MSnbase_2.26.0              backports_1.4.1            
+ [11] utf8_1.2.3                  R6_2.5.1                   
+ [13] DT_0.28                     lazyeval_0.2.2             
+ [15] mgcv_1.8-42                 GetoptLong_1.0.5           
+ [17] withr_2.5.0                 gridExtra_2.3              
+ [19] pvca_1.40.0                 preprocessCore_1.62.1      
+ [21] WGCNA_1.72-1                cli_3.6.1                  
+ [23] Biobase_2.60.0              sandwich_3.0-2             
+ [25] labeling_0.4.2              mvtnorm_1.2-2              
+ [27] genefilter_1.82.1           foreign_0.8-84             
+ [29] limma_3.56.2                rstudioapi_0.14            
+ [31] impute_1.74.1               RSQLite_2.3.1              
+ [33] generics_0.1.3              shape_1.4.6                
+ [35] car_3.1-2                   wesanderson_0.3.6          
+ [37] GO.db_3.17.0                Matrix_1.5-4               
+ [39] MALDIquant_1.22.1           fansi_1.0.4                
+ [41] S4Vectors_0.38.1            imputeLCMD_2.1             
+ [43] abind_1.4-5                 lifecycle_1.0.3            
+ [45] yaml_2.3.7                  edgeR_3.42.4               
+ [47] carData_3.0-5               SummarizedExperiment_1.30.2
+ [49] blob_1.2.4                  promises_1.2.0.1           
+ [51] dqrng_0.3.0                 crayon_1.5.2               
+ [53] shinydashboard_0.7.2        lattice_0.21-8             
+ [55] beachmat_2.16.0             cowplot_1.1.1              
+ [57] annotate_1.78.0             mzR_2.34.1                 
+ [59] KEGGREST_1.40.0             pillar_1.9.0               
+ [61] knitr_1.43                  GenomicRanges_1.52.0       
+ [63] rjson_0.2.21                boot_1.3-28.1              
+ [65] codetools_0.2-19            glue_1.6.2                 
+ [67] pcaMethods_1.92.0           data.table_1.14.8          
+ [69] vctrs_0.6.3                 png_0.1-8                  
+ [71] cellranger_1.1.0            gtable_0.3.3               
+ [73] assertthat_0.2.1            cachem_1.0.8               
+ [75] xfun_0.39                   S4Arrays_1.0.4             
+ [77] mime_0.12                   RcppEigen_0.3.3.9.3        
+ [79] survival_3.5-5              ncdf4_1.21                 
+ [81] pheatmap_1.0.12             iterators_1.0.14           
+ [83] gmm_1.8                     ellipsis_0.3.2             
+ [85] nlme_3.1-162                bit64_4.0.5                
+ [87] GenomeInfoDb_1.36.1         affyio_1.70.0              
+ [89] tmvtnorm_1.5                irlba_2.3.5.1              
+ [91] rpart_4.1.19                colorspace_2.1-0           
+ [93] BiocGenerics_0.46.0         DBI_1.1.3                  
+ [95] Hmisc_5.1-0                 nnet_7.3-18                
+ [97] tidyselect_1.2.0            bit_4.0.5                  
+ [99] compiler_4.3.0              htmlTable_2.4.1            
+[101] DelayedArray_0.26.3         checkmate_2.2.0            
+[103] scales_1.2.1                affy_1.78.0                
+[105] digest_0.6.31               minqa_1.2.5                
+[107] rmarkdown_2.22              XVector_0.40.0             
+[109] htmltools_0.5.5             pkgconfig_2.0.3            
+[111] base64enc_0.1-3             lme4_1.1-33                
+[113] sparseMatrixStats_1.12.1    MatrixGenerics_1.12.2      
+[115] fastmap_1.1.1               rlang_1.1.1                
+[117] GlobalOptions_0.1.2         htmlwidgets_1.6.2          
+[119] shiny_1.7.4                 DelayedMatrixStats_1.22.1  
+[121] farver_2.1.1                zoo_1.8-12                 
+[123] jsonlite_1.8.5              BiocParallel_1.34.2        
+[125] mzID_1.38.0                 BiocSingular_1.16.0        
+[127] RCurl_1.98-1.12             magrittr_2.0.3             
+[129] Formula_1.2-5               GenomeInfoDbData_1.2.10    
+[131] munsell_0.5.0               Rcpp_1.0.10                
+[133] viridis_0.6.3               MsCoreUtils_1.12.0         
+[135] vsn_3.68.0                  stringi_1.7.12             
+[137] zlibbioc_1.46.0             MASS_7.3-58.4              
+[139] plyr_1.8.8                  parallel_4.3.0             
+[141] Biostrings_2.68.1           splines_4.3.0              
+[143] hms_1.1.3                   circlize_0.4.15            
+[145] locfit_1.5-9.8              polylabelr_0.2.0           
+[147] fastcluster_1.2.3           ggsignif_0.6.4             
+[149] reshape2_1.4.4              stats4_4.3.0               
+[151] ScaledMatrix_1.8.1          XML_3.99-0.14              
+[153] evaluate_0.21               BiocManager_1.30.21        
+[155] nloptr_2.0.3                tzdb_0.4.0                 
+[157] foreach_1.5.2               httpuv_1.6.11              
+[159] polyclip_1.10-4             clue_0.3-64                
+[161] norm_1.0-11.1               rsvd_1.0.5                 
+[163] broom_1.0.5                 xtable_1.8-4               
+[165] rstatix_0.7.2               later_1.3.1                
+[167] viridisLite_0.4.2           memoise_2.0.1              
+[169] AnnotationDbi_1.62.1        IRanges_2.34.1             
+[171] cluster_2.1.4               corrplot_0.92              
+[173] timechange_0.2.0            sva_3.48.0                 
+[175] ggfortify_0.4.16           </code></pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
